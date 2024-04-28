@@ -1,0 +1,24 @@
+section {
+
+    padding: 0px 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.section-header {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.partition-container {
+    display: flex;
+    justify-content: center;
+  }
+
+.header {
+    
+    height: 86px;
+    transition: all 0.5s;
+    z-index: 997;
+   
+}
