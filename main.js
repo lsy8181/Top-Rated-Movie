@@ -88,6 +88,28 @@ function _0x5438() {
   };
   return _0x5438();
 }
+function updateHeroSection(movie) {
+  const heroSection = document.querySelector('.hero');
+  const movieTitle = document.querySelector('.movie-title');
+  const movieDescription = document.querySelector('.movie-description');
+
+  // 영화 데이터에서 정보 업데이트
+  heroSection.style.backgroundImage = `url('${movie.image}')`;
+  movieTitle.textContent = movie.title;
+  movieDescription.textContent = movie.description;
+}
+
+// 예제 영화 데이터
+const exampleMovie = {
+  title: "예제 영화",
+  description: "이것은 예제 영화입니다. 여기에 영화에 대한 설명이 들어갑니다.",
+  image: "example-movie-background.jpg"
+};
+
+// 페이지가 로드되면 hero 섹션 업데이트
+document.addEventListener('DOMContentLoaded', () => {
+  updateHeroSection(exampleMovie);
+});
 const handleSearch = (_0x4a90e9) => {
     const _0x7a18fc = _0x42f828;
     _0x4a90e9[_0x7a18fc(0xd2)]();
@@ -118,26 +140,26 @@ const handleSearch = (_0x4a90e9) => {
     createMovieCards();
   });
   
-  // 영화 카드를 생성하는 함수
-  async function createMovieCards() {
-    const moviesData = await fetchMovieData(); // 영화 데이터 불러오기
-    const mainCardList = document.querySelector('.main .card-list'); // main 섹션의 card-list 선택
-    const recommendCardList = document.querySelector('.recommend .card-list'); // recommend 섹션의 card-list 선택
   
-    // 영화 데이터를 사용하여 카드 생성
+  async function createMovieCards() {
+    const moviesData = await fetchMovieData(); 
+    const mainCardList = document.querySelector('.main .card-list'); 
+    const recommendCardList = document.querySelector('.recommend .card-list'); 
+  
+
     moviesData.slice(0, 10).forEach(movie => {
-      const movieCardMain = createCard(movie); // main 섹션용 카드 생성
-      mainCardList.appendChild(movieCardMain); // main 섹션에 카드 추가
+      const movieCardMain = createCard(movie); 
+      mainCardList.appendChild(movieCardMain); 
     
-      const movieCardRecommend = createCard(movie); // recommend 섹션용 카드 생성
-      recommendCardList.appendChild(movieCardRecommend); // recommend 섹션에 카드 추가
+      const movieCardRecommend = createCard(movie); 
+      recommendCardList.appendChild(movieCardRecommend); 
     });
   }
   
   function createCard(movie) {
     const card = document.createElement('div');
     card.classList.add('movie-card');
-    // 영화 id를 data-id 속성으로 저장합니다.
+  
     card.setAttribute('data-id', movie.id);
     
     const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
@@ -147,7 +169,7 @@ const handleSearch = (_0x4a90e9) => {
       <p>${movie.overview}</p>
     `;
     
-    // 클릭 이벤트 리스너를 추가합니다.
+
     card.addEventListener('click', function() {
       alert(`영화 ID: ${this.getAttribute('data-id')}`);
     });
