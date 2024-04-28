@@ -1,24 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript movie toprated</title>
-    <link rel="stylesheet" href="style.css">
-    
-</head>
-<body>
-    <section id ="header" class="header">
-      <div class="container container-xl d-flex align-items-center justify-content-center">
-        <div class="column align-items-center">
-          <img src="assets/logo semi.png" class="img-fluid " alt="">
-        </div>
-      </div>
-    </section>
 
- 
-  <hero id="hero" class=" hero"></hero>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript movie toprated</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <section id="header" class="header">
+    <div class="container container-xl d-flex align-items-center justify-content-center">
+      <a href="index.html" class="logo d-flex align-items-center">
+
+      </a>
+    </div>
+    <form class="search" onsubmit="handleSearch(event)">
+      <label>영화 검색 : </label>
+      <input type="text" id="search-input" placeholder="영화 제목을 검색해 보세요" />
+      <button type="submit" id="search-btn">검색</button>
+    </form>
+  </section>
+
+
+  <section id="hero" class="hero">
+    <div class="container">
+      <div class="title">
+        <h2>영화 제목</h2>
+      </div>
+      <div class="title">
+        <h3>영화 내용영화 내용영화 내용영화 내용영화 내용영화 내용영화 내용영화 내용영화 내용</h3>
+      </div>
+    </div>
+  </section>
+
+  <section id="main" class="main">
+    <div class="container d-flex">
+      <div class="title">
+        <h2>추천 영화</h2>
+      </div>
+      <section class="card-list"></section>
+    </div>
+  </section>
+
+  <section id="recommend" class="recommend">
+    <div class="container d-flex">
+      <div class="title">
+        <h2>영화 목록</h2>
+      </div>
+      <section class="card-list"></section>
+    </div>
+  </section>
+
 
   <script src="./main.js"></script>
 </body>
+
 </html>
