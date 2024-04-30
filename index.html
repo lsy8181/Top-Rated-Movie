@@ -4,22 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JavaScript movie toprated</title>
+  <title>자바 스크립트 재제출 버전</title>
   <link rel="stylesheet" href="style.css">
-
+  <link rel="stylesheet" href="reset.css" />
 </head>
 
 <body>
   <section id="header" class="header">
     <div class="container container-xl d-flex align-items-center justify-content-center">
       <a href="index.html" class="logo d-flex align-items-center">
-
       </a>
     </div>
-    <form class="search" onsubmit="handleSearch(event)">
-      <label>영화 검색 : </label>
-      <input type="text" id="search-input" placeholder="영화 제목을 검색해 보세요" />
-      <button type="submit" id="search-btn">검색</button>
+    <form class="search-form" onsubmit="search_movie(event)">
+      <input class="search-box" />
+      <button>검색</button>
     </form>
   </section>
 
@@ -27,6 +25,7 @@
   <div class="hero" style="background-image: url('default-background.jpg');">
     <h1 class="movie-title">영화 제목</h1>
     <p class="movie-description">영화 설명</p>
+    <div class="overlay"></div>
   </div>
 
   <section id="main" class="main">
@@ -34,21 +33,80 @@
       <div class="title">
         <h2>추천 영화</h2>
       </div>
-      <section class="card-list"></section>
+      <ul class="movie-list">
+      </ul>
     </div>
   </section>
 
-  <section id="recommend" class="recommend">
-    <div class="container d-flex">
-      <div class="title">
-        <h2>영화 목록</h2>
-      </div>
-      <section class="card-list"></section>
-    </div>
-  </section>
+  <script>
+    let allMovieList = [];
+
+    const draw_movie_list = movie_list => {
+      const movie_list_element = document.getElementsByClassName("movie-list")[0];
+
+      movie_list_element.innerHTML = movie_list.reduce((_movie_list, movie_item) => {
+        const { id, poster_path, title, overview, vote_average } = movie_item;
+
+        if (_movie_list === "") setHeroBackground(poster_path, title, overview);
+
+        return (_movie_list += `
+        <li class="movie-item" onclick="alert('movie_id : ${id}')">
+          <img class="movie-poster" src="https://image.tmdb.org/t/p/w500/${poster_path}" alt="${title} 포스터" />
+          <h2 class="movie-title">${title}</h2>
+          <p class="movie-desc">${overview}</p>
+          <p class="movie-rating">Rating : ${vote_average}</p>
+        </li>
+        `);
+      }, "");
+    };
+
+    const setHeroBackground = (poster_path, title = "", overview = "") => {
+      const heroSection = document.querySelector('.hero');
+      const posterUrl = `https://image.tmdb.org/t/p/original${poster_path}`;
+      heroSection.style.backgroundImage = `url('${posterUrl}')`;
+
+      // 영화 제목과 설명 업데이트
+      const movieTitleElement = document.querySelector('.movie-title');
+      const movieDescriptionElement = document.querySelector('.movie-description');
+
+      movieTitleElement.textContent = title; // 영화 제목을 업데이트
+      movieDescriptionElement.textContent = overview; // 영화 설명을 업데이트
+    };
 
 
-  <script src="./main.js"></script>
+    const fetch_movie = async rest_url => {
+      const { results } = await fetch(`https://api.themoviedb.org/3/${rest_url}`, {
+        headers: {
+          Authorization:
+            "Bearer [TOKEN]"
+        }
+      }).then(response => response.json());
+
+      return results;
+    };
+
+    const load_movie = async () => {
+      all_movie_list = await fetch_movie("movie/popular");
+      draw_movie_list(all_movie_list);
+    };
+
+    const search_movie = async event => {
+      event.preventDefault();
+
+      const search_box = document.getElementsByClassName("search-box")[0];
+      const search_keyword = search_box.value.toUpperCase();
+
+      const search_movie_list = all_movie_list.filter(({ title }) =>
+        title.toUpperCase().includes(search_keyword)
+      );
+
+      search_movie_list.length > 0
+        ? draw_movie_list(search_movie_list)
+        : alert("검색 결과가 없습니다.");
+    };
+
+    window.onload = load_movie;
+  </script>
 </body>
 
 </html>
